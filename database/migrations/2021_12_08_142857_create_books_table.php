@@ -16,10 +16,12 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();            
+            $table->string('title')->unique();
             $table->string('author');
             $table->date('release')->nullable();
             $table->integer('price');
+            $table->unsignedBigInteger('genreId');
+            $table->foreign('genreId')->references('id')->on('genres');
             $table->timestamps();
         });
     }

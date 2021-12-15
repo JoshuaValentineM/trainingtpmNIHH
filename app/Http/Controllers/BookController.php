@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class BookController extends Controller
         return view('create');
     }
 
-    public function createBook(Request $request){
+    public function createBook(BookRequest $request){
+
         Book::create([
             'title' => $request->title,
             'author' => $request->author,
@@ -34,7 +36,7 @@ class BookController extends Controller
         return view('update', ['book' => $book]);
     }
 
-    public function updateBook(Request $request, $id){
+    public function updateBook(BookRequest $request, $id){
         $book = Book::find($id);
 
         // Cara pertama:
