@@ -26,4 +26,39 @@ class BookController extends Controller
         $books = Book::all();
         return view('view', ['books'=> $books]);
     }
+
+
+    public function getBookById($id){
+        $book = Book::find($id);
+        // dd($book);
+        return view('update', ['book' => $book]);
+    }
+
+    public function updateBook(Request $request, $id){
+        $book = Book::find($id);
+
+        // Cara pertama:
+        // $book ->title = $request->title;
+        // $book ->author = $request->author;
+        // $book ->release = $request->release;
+        // $book ->price = $request->price;
+
+        // $book->save();
+
+        // Cara kedua:
+        $book -> update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'release' => $request->release,
+            'price' => $request->price,
+        ]);
+
+        return redirect(route('getBooks'));
+
+    }
+
+    public function deleteBook($id){
+        Book::destroy($id);
+        return redirect(route('getBooks'));
+    }
 }
