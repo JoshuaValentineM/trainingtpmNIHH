@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\katalogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,18 @@ Route::get('/update-book/{id}', [BookController::class, 'getBookById']) ->name('
 Route::patch('/update-book/{id}', [BookController::class, 'updateBook'])->name('updateBook');
 
 Route::delete('/delete-book/{id}', [BookController::class, 'deleteBook'])->name('delete');
+
+Route::get('/createkatalog', [katalogController::class, 'getKatalog'])->name('getKatalog');
+
+Route::post('/create-katalog', [katalogController::class, 'createKatalog'])->name('createKatalog');
+
+Route::get('get-katalogs', [katalogController::class, 'getKatalogs'])->name('getKatalogs');
+
+Route::get('/update-katalog/{id}', [katalogController::class, 'getKatalogById']) ->name('getKatalogById');
+
+Route::patch('/update-katalog/{id}', [katalogController::class, 'updateKatalog'])->name('updateKatalog');
+
+Route::delete('/delete-katalog/{id}', [katalogController::class, 'deleteKatalog'])->name('deleteKatalog');
 
 Route::get('hello', function(){
     echo('Hello World');
