@@ -4,39 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
 use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function getCreatePage(){
-        return view('create');
+    public function getCreatePage()
+    {
+        $genres = Genre::all();
+        return view('create', ['genres' => $genres]);
     }
 
-    public function createBook(BookRequest $request){
+    public function createBook(BookRequest $request)
+    {
 
         Book::create([
             'title' => $request->title,
             'author' => $request->author,
             'release' => $request->release,
             'price' => $request->price,
+            'genreId' => $request->genreId
         ]);
 
-        return redirect(route('getCreatePage'));
+        return redirect(route('getBooks'));
     }
 
-    public function getBooks(){
+    public function getBooks()
+    {
         $books = Book::all();
-        return view('view', ['books'=> $books]);
+        return view('view', ['books' => $books]);
     }
 
 
-    public function getBookById($id){
+    public function getBookById($id)
+    {
         $book = Book::find($id);
         // dd($book);
         return view('update', ['book' => $book]);
     }
 
-    public function updateBook(BookRequest $request, $id){
+    public function updateBook(BookRequest $request, $id)
+    {
         $book = Book::find($id);
 
         // Cara pertama:
@@ -48,7 +56,7 @@ class BookController extends Controller
         // $book->save();
 
         // Cara kedua:
-        $book -> update([
+        $book->update([
             'title' => $request->title,
             'author' => $request->author,
             'release' => $request->release,
@@ -56,10 +64,10 @@ class BookController extends Controller
         ]);
 
         return redirect(route('getBooks'));
-
     }
 
-    public function deleteBook($id){
+    public function deleteBook($id)
+    {
         Book::destroy($id);
         return redirect(route('getBooks'));
     }

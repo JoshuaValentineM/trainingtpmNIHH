@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class katalogController extends Controller
 {
-    public function getKatalog(){
+    public function getKatalog()
+    {
         return view('createkatalog');
     }
 
-    public function createKatalog(KatalogRequest $request){
+    public function createKatalog(KatalogRequest $request)
+    {
 
         katalog::create([
             'nama' => $request->nama,
@@ -24,22 +26,30 @@ class katalogController extends Controller
             'idline' => $request->idline,
         ]);
 
-        return redirect(route('getKatalog'));
+        return redirect(route('getKatalogs'));
     }
 
-    public function getKatalogs(){
-        $katalog = katalog::all();
-        return view('viewkatalog', ['katalog'=> $katalog]);
+    public function getKatalogs(Request $request)
+    {
+
+        if ($request->has('search')) {
+            $katalog = katalog::where('nama', 'LIKE', '%' . $request->search . '%')->orwhere('jurusan', 'LIKE', '%' . $request->search . '%')->orwhere('jabatan', 'LIKE', '%' . $request->search . '%')->orwhere('tempatlahir', 'LIKE', '%' . $request->search . '%')->get();
+        } else $katalog = katalog::all();
+
+        // $katalog = katalog::all();
+        return view('viewkatalog', ['katalog' => $katalog]);
     }
 
 
-    public function getKatalogById($id){
+    public function getKatalogById($id)
+    {
         $katalog = katalog::find($id);
         // dd($book);
         return view('updateKatalog', ['katalog' => $katalog]);
     }
 
-    public function updateKatalog(KatalogRequest $request, $id){
+    public function updateKatalog(KatalogRequest $request, $id)
+    {
         $katalog = katalog::find($id);
 
         // Cara pertama:
@@ -51,7 +61,7 @@ class katalogController extends Controller
         // $book->save();
 
         // Cara kedua:
-        $katalog -> update([
+        $katalog->update([
             'nama' => $request->nama,
             'jurusan' => $request->jurusan,
             'jabatan' => $request->jabatan,
@@ -62,10 +72,10 @@ class katalogController extends Controller
         ]);
 
         return redirect(route('getKatalogs'));
-
     }
 
-    public function deleteKatalog($id){
+    public function deleteKatalog($id)
+    {
         katalog::destroy($id);
         return redirect(route('getKatalogs'));
     }

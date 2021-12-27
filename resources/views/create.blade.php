@@ -13,6 +13,18 @@
 <body>
     <h1>Create form</h1>
 
+    @guest
+        <a href="{{route('login')}}">Login</a>
+        @else
+        <form action ="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-danger">logout</button>
+        </form>
+    @endguest
+    {{-- <form action ="{{route('logout')}}" method="POST">
+        <button type="submit" class="btn btn-danger">logout</button>
+    </form> --}}
+
     <form action="{{ route('createBook') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
@@ -30,6 +42,10 @@
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
             <input name="price" type="numeric" class="form-control" id="formGroupExampleInput" placeholder="Input Price">
+        </div>
+        <div class="mb-3">
+            <label for="genreId" class="form-label">Genre Id</label>
+            <input name="genreId" type="numeric" class="form-control" id="formGroupExampleInput" placeholder="genre id">
         </div>
         @error('price')
         <div class="alert alert-danger">{{$message}}</div>

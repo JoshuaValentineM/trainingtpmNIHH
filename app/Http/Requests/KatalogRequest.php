@@ -24,13 +24,13 @@ class KatalogRequest extends FormRequest
     public function rules()
     {
         return [
-                'nama' => 'required',
-                'jurusan' => 'required',
-                'jabatan' => 'required',
-                'tempatlahir' => 'required',
-                'tanggallahir' => 'required',
-                'nomorhp' => 'required',
-                'idline' => 'required',
+            'nama' => 'required',
+            'jurusan' => 'required',
+            'jabatan' => 'required',
+            'tempatlahir' => 'required',
+            'tanggallahir' => 'required',
+            'nomorhp' => 'required',
+            'idline' => 'required',
             //Melakukan validasi
         ];
     }
@@ -38,7 +38,7 @@ class KatalogRequest extends FormRequest
     public function messages()
     {
         return [
-            'nama' => 'Nama harus diisi',
+            // 'nama' => 'Nama harus diisi',
         ];
     }
 }
